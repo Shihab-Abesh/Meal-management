@@ -1,0 +1,16 @@
+# Protects the project when it lives inside XAMPP's htdocs folder.
+#
+# Only public/ may be served by Apache. Everything else (.env, storage logs,
+# vendor, source code) is blocked, and the folder URL opens the app.
+# Not needed when the web server's document root points at public/.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^$ %{REQUEST_URI}public/ [R=302,L]
+    RewriteRule !^public(/|$) - [F]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>

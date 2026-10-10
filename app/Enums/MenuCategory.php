@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Enums;
+
+enum MenuCategory: string
+{
+    case MainCourse = 'main_course';
+    case SideDish = 'side_dish';
+    case Protein = 'protein';
+    case Beverage = 'beverage';
+    case Dessert = 'dessert';
+    case Other = 'other';
+
+    public function label(): string
+    {
+        return match ($this) {
+            self::MainCourse => 'Main Course',
+            self::SideDish => 'Side Dish',
+            self::Protein => 'Protein',
+            self::Beverage => 'Beverage',
+            self::Dessert => 'Dessert',
+            self::Other => 'Other',
+        };
+    }
+
+    /**
+     * @return list<array{value: string, label: string}>
+     */
+    public static function options(): array
+    {
+        return array_map(
+            fn (self $category) => ['value' => $category->value, 'label' => $category->label()],
+            self::cases(),
+        );
+    }
+}
